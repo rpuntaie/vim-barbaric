@@ -1,3 +1,7 @@
+if !has('gui_running')
+  finish
+endif
+
 " Prevent double-sourcing  -----------------------------------------------------
 execute exists('g:loaded_barbaric') ? 'finish' : 'let g:loaded_barbaric = 1'
 

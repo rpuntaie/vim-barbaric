@@ -1,3 +1,7 @@
+if !has('gui_running')
+  finish
+endif
+
 " Check dependencies
 if has('mac') && executable('xkbswitch')
   let g:barbaric_ime = 'macos'
