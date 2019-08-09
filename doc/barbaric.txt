@@ -8,9 +8,10 @@ mode commands are nearly all mapped to Latin characters). It automatically
 detects and switches between input methods as appropriate, and requires no
 user interaction.
 
-This plugin depends on a third-party binary which is only available for macOS.
-For other platforms, consider built-in support for X11 (|mbyte-XIM|) and
-Windows (|mbyte-IME|) IMEs.
+For MacOS, this plugin depends on `xkbswitch`.
+For Linux, either `fcitx-remote` or `ibus engine` is used.
+
+See also X11 |mbyte-XIM| and Windows |mbyte-IME|.
 
 Technical Reference ~
 
@@ -21,8 +22,8 @@ Technical Reference ~
 ==============================================================================
 DEPENDENCIES						*barbaric-dependencies*
 
-This plugin depends on xkbswitch-macosx.
-To install it, copy the binary to one of the folders on your PATH:
+For MacOS, to install `xkbswitch-macosx`,
+copy the binary to one of the folders on your PATH:
 
 	$ git clone https://github.com/myshov/xkbswitch-macosx
 	$ cp xkbswitch-macosx/bin/xkbswitch /usr/local/bin
@@ -54,12 +55,18 @@ Persistence timeout	number (default -1)
 	Disabled by default.
 
 ==============================================================================
+OPTIONS							*barbaric-functions*
+
+							*barbaric#on(im)*
+Switch to `im` system-wide from inside vim.
+
+							*barbaric#off()*
+Switch to |g:barbaric_default| system-wide from inside vim.
+
+==============================================================================
 ABOUT							*barbaric-about*
 
-This project is hosted on GitHub.
-	https://github.com/rlue/vim-barbaric  
- 
 							*barbaric-license*
-Copyright © Ryan Lue. Distributed under the MIT License.
+Distributed under the MIT License.
 
  vim:tw=78:ts=8:et:ft=help:norl:

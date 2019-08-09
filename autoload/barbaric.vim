@@ -2,19 +2,40 @@
 " Prevent double-sourcing
 execute exists('g:loaded_barbaric') ? 'finish' : 'let g:loaded_barbaric = 1'
 
-" PUBLIC FUNCTIONS =============================================================
+" off / on ---------------------------------------------------------------------
+function! barbaric#off()
+  call s:set_im(g:barbaric_default)
+  call s:record_im()
+endfunction
+
+function! barbaric#on(im)
+  call s:set_im(a:im)
+  call barbaric#switch('focus')
+endfunction
+
+" switch mode ------------------------------------------------------------------
 function! barbaric#switch(next_mode)
-  if a:next_mode == 'normal'
+  let l:m = mode()
+  let l:next_mode = a:next_mode
+  if l:next_mode == 'focus'
     call s:record_im()
+    if l:m == 'i'
+      let l:next_mode = 'insert'
+    else
+      let l:next_mode = 'normal'
+    endif
+  elseif l:next_mode == 'unfocus'
+    let l:next_mode = 'insert'
+  endif
+  if l:next_mode == 'normal'
     call s:restore_normal_im()
     call s:set_timeout()
-  elseif a:next_mode == 'insert'
+  elseif l:next_mode == 'insert'
     call s:check_timeout()
     call s:restore_insert_im()
   endif
 endfunction
 
-" HELPER FUNCTIONS =============================================================
 " Scope ------------------------------------------------------------------------
 function! s:scope_marker()
   let l:scope = s:scope()
