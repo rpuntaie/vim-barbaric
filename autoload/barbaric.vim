@@ -29,38 +29,18 @@ function! barbaric#switch(next_mode)
   endif
   if l:next_mode == 'normal'
     call s:restore_normal_im()
-    call s:set_timeout()
   elseif l:next_mode == 'insert'
-    call s:check_timeout()
     call s:restore_insert_im()
   endif
-endfunction
-
-" Scope ------------------------------------------------------------------------
-function! s:scope_marker()
-  let l:scope = s:scope()
-  if l:scope == 'g'
-    return
-  elseif l:scope == 't'
-    return tabpagenr()
-  elseif l:scope == 'w'
-    return win_getid()
-  elseif l:scope == 'b'
-    return bufnr('%')
-  endif
-endfunction
-
-function! s:scope()
-  return strcharpart(g:barbaric_scope, 0, 1)
 endfunction
 
 " Input method -----------------------------------------------------------------
 function! s:record_im()
   let l:im = barbaric#get_im()
   if l:im == g:barbaric_default
-    execute 'silent! unlet ' . s:im_varname()
+    execute 'silent! unlet g:barbaric_current'
   else
-    execute "silent! let " . s:im_varname() . " = '" . l:im . "'"
+    execute "silent! let g:barbaric_current = '" . l:im . "'"
   endif
 endfunction
 
@@ -79,8 +59,8 @@ function! s:restore_normal_im()
 endfunction
 
 function! s:restore_insert_im()
-  if !exists(s:im_varname()) | return | endif
-  call s:set_im(eval(s:im_varname()))
+  if !exists(g:barbaric_current) | return | endif
+  call s:set_im(eval(g:barbaric_current))
 endfunction
 
 function! s:set_im(im)
@@ -93,24 +73,3 @@ function! s:set_im(im)
   endif
 endfunction
 
-function! s:im_varname()
-  return s:scope() . ':barbaric_current'
-endfunction
-
-" Timeout ----------------------------------------------------------------------
-function! s:set_timeout()
-  if g:barbaric_timeout < 0 | return | endif
-
-  let s:timeout = { 'scope': s:scope_marker(), 'begin': localtime() }
-endfunction
-
-function! s:check_timeout()
-  if g:barbaric_timeout < 0 | return | endif
-  if !exists('s:timeout') || (s:scope_marker() != get(s:timeout, 'scope'))
-    return
-  endif
-
-  if (localtime() - get(s:timeout, 'begin')) > g:barbaric_timeout
-    execute 'silent! unlet ' . s:im_varname()
-  endif
-endfunction

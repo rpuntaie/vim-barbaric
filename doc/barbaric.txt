@@ -35,26 +35,10 @@ copy the binary to one of the folders on your PATH:
 OPTIONS							*barbaric-options*
 
 							*g:barbaric_default*
-Default input method	number (default system('xkbswitch -g'))
-	Specifies the input method to activate when exiting Insert mode (as
-	reported by xkbswitch).
+Default input method	defined by 'xkbswitch -g' 'fcitx-remote' or 'ibus engine'
+	Specifies the input method to activate when exiting Insert mode.
 	Be sure to set this if you think you might ever have a non-Latin input
 	method active when launching vim.
-
-							*g:barbaric_scope*
-Persistence scope	string (default "buffer")
-	Sets the scope across which remembered input methods will persist.
-	For example, when "buffer" is used, remembered input methods are local
-	to a each buffer.
-	Options are "global", "tab", "window", or "buffer".
-
-							*g:barbaric_timeout*
-Persistence timeout	number (default -1)
-	Forget remembered input methods if this many seconds have elapsed
-	since the last time you entered Insert mode.
-	Useful if you only need input method persistence for short bursts of
-	active work.
-	Disabled by default.
 
 ==============================================================================
 OPTIONS							*barbaric-functions*
