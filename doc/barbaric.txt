@@ -12,6 +12,8 @@ For MacOS, this plugin depends on `xkbswitch`.
 For Linux, either `fcitx-remote` or `ibus engine` is used.
 
 See also X11 |mbyte-XIM| and Windows |mbyte-IME|.
+For non-asian languages |mbyte-keymap| is better,
+because local to vim.
 
 Technical Reference ~
 
